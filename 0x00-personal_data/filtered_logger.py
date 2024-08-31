@@ -3,10 +3,10 @@
 """A logger module
 """
 
-import logging
-import mysql
 import os
 import re
+import logging
+import mysql.connector
 from typing import List
 
 
