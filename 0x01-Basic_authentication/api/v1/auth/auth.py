@@ -9,8 +9,13 @@ class Auth:
     """Basic Authentification class"""
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        '''Require Auth'''
-        return False
+        '''checks if a given path require Auth'''
+        if path is None or excluded_paths is None or excluded_paths == []:
+            return True
+        if path[-1] != '/':
+            path += '/'
+        if path in excluded_paths:
+            return False
 
     def authorization_header(self, request=None) -> str:
         '''Return Authorization Header'''
