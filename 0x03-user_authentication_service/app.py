@@ -31,7 +31,10 @@ def users() -> str:
 
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
 def login() -> str:
-    '''login and create a new session'''
+    '''POST /sessions
+        Return:
+        The session creation process reponse
+    '''
 
     email, password = request.form.get("email"), request.form.get("password")
     if AUTH.valid_login(email, password):
@@ -51,10 +54,9 @@ def logout() -> str:
         The session deletion process reponse
     '''
     session_id = request.cookies.get("session_id")
-    if session_id:
-        if AUTH.destroy_session(session_id):
-            Auth.destroy_session(session_id)
-            redirect('/')
+    if AUTH.destroy_session(session_id):
+        Auth.destroy_session(session_id)
+        return redirect('/')
     Flask.abort(403)
 
 
