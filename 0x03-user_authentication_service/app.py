@@ -2,7 +2,7 @@
 '''Flask app'''
 
 from auth import Auth
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, redirect
 
 
 app = Flask(__name__)
@@ -42,6 +42,20 @@ def login() -> str:
 
     else:
         Flask.abort(401)
+
+
+@app.route("/sessions", methods=["DELETE"], strict_slashes=False)
+def logout() -> str:
+    '''Delete /sessions
+        Return:
+        The session deletion process reponse
+    '''
+    session_id = request.cookies.get("session_id")
+    if session_id:
+        if AUTH.destroy_session(session_id):
+            Auth.destroy_session(session_id)
+            redirect('/')
+    Flask.abort(403)
 
 
 if __name__ == "__main__":
