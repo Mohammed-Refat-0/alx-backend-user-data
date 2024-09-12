@@ -3,7 +3,6 @@
 
 from auth import Auth
 from flask import Flask, jsonify, request
-import request
 
 
 app = Flask(__name__)
@@ -18,7 +17,9 @@ def mess() -> str:
 
 @app.route("/users", methods=["POST"], strict_slashes=False)
 def users() -> str:
-    """register a user
+    """POST /users
+    Return:
+        The account creation process reponse
     """
     email, password = request.form.get("email"), request.form.get("password")
     try:
