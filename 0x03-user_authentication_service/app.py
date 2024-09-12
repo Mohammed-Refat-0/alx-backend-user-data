@@ -6,9 +6,8 @@ from flask import Flask, jsonify
 import request
 
 
-AUTH = Auth()
-
 app = Flask(__name__)
+AUTH = Auth()
 
 
 @app.route('/', methods=["GET"], strict_slashes=False)
