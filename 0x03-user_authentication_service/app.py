@@ -2,6 +2,7 @@
 '''Flask app'''
 
 from auth import Auth
+import flask
 from flask import Flask, jsonify, request, redirect
 
 
@@ -44,7 +45,7 @@ def login() -> str:
         return response
 
     else:
-        Flask.abort(401)
+        flask.abort(401)
 
 
 @app.route("/sessions", methods=["DELETE"], strict_slashes=False)
@@ -56,7 +57,7 @@ def logout() -> str:
     session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
     if user is None:
-        Flask.abort(403)
+        flask.abort(403)
     AUTH.destroy_session(user.id)
     return redirect("/")
 
@@ -70,7 +71,7 @@ def profile() -> str:
     session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
     if user is None:
-        Flask.abort(403)
+        flask.abort(403)
     return jsonify({"email": user.email})
 
 
