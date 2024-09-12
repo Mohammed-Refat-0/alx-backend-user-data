@@ -15,9 +15,8 @@ def _hash_password(password: str) -> bytes:
 
 
 def _generate_uuid() -> str:
-    """Generates a UUID.
-    """
-    return str(uuid4())
+    """return a Generated  UUID"""
+    return str(uuid.uuid4())
 
 
 class Auth:
@@ -52,3 +51,17 @@ class Auth:
         except NoResultFound:
             return False
         return False
+
+    def create_session(self, email: str) -> str:
+        """Creates and stores a new session for a user
+        """
+        user = None
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return None
+        if user is None:
+            return None
+        session_id = _generate_uuid()
+        self._db.update_user(user.id, session_id=session_id)
+        return session_id
