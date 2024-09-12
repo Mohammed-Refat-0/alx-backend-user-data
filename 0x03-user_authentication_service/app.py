@@ -36,11 +36,12 @@ def login() -> str:
     email, password = request.form.get("email"), request.form.get("password")
     if AUTH.valid_login(email, password):
         session_id = AUTH.create_session(email)
-        if session_id:
-            response = jsonify({"email": email, "message": "logged in"})
-            response.set_cookie("session_id", session_id)
-            return response
-    Flask.abort(401)
+        response = jsonify({"email": email, "message": "logged in"})
+        response.set_cookie("session_id", session_id)
+        return response
+
+    else:
+        Flask.abort(401)
 
 
 if __name__ == "__main__":
