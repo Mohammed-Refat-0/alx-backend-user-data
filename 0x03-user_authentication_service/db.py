@@ -47,7 +47,7 @@ class DB:
             new_user = None
         return new_user
 
-    def find_user_by(self, **kwargs: Any) -> User:
+    def find_user_by(self, **kwargs) -> User:
         '''rturns the first row found in users' table
         as filtered by the arguments'''
         fields, values = [], []
