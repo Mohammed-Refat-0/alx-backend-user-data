@@ -82,11 +82,14 @@ def get_reset_password_token() -> str:
     The reset token
     '''
     email = request.form.get("email")
+    reset_token = None
     try:
-        token = Auth.get_reset_password_token(email)
-        return jsonify({"email": email, "reset_token": token})
+        reset_token = AUTH.get_reset_password_token(email)
     except ValueError:
+        reset_token = None
+    if reset_token is None:
         flask.abort(403)
+    return jsonify({"email": email, "reset_token": reset_token})
 
 
 if __name__ == "__main__":
